@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Http; // For making HTTP requests to the Groq API
 class ChatbotService {
 
     // Saves a message to the database
+    // to keep a record of the conversation history between the user and the AI assistant
     public function saveMessage(int $chatId, string $role, string $content) {
         return Message::create([
             'chat_id' => $chatId,
@@ -34,7 +35,15 @@ class ChatbotService {
             "2. Suggest what to do with their entries based on app features (favorite, delete).\n" .
             "3. Be empathetic and supportive.\n" .
             "4. Match the user's language (English, Tagalog, Hiligaynon, or Taglish).\n" .
-            "5. DO NOT use markdown formatting (no asterisks). Use plain text only.\n";
+            "5. DO NOT use markdown formatting.\n" .
+            "6. Use asterisks (*), bullet points, numbered lists, or hashtags.\n" .
+            "7. Format responses using plain sentences and line breaks only.\n" .
+            "8. Example GOOD response:\n" .
+                "Entry titled Happy Day was created on April 1, 2026.\n" .
+                "Entry titled Celebration was created on March 4, 2026.\n" .
+            "9. Example BAD response:\n" .
+                "* Entry ID 3\n" .
+                "* Entry ID 5\n";
 
         // Fetch the chat history
         $chatHistory = Message::where('chat_id', $chatId)->orderBy('created_at', 'asc')->get();
@@ -55,7 +64,7 @@ class ChatbotService {
                 ->post('https://api.groq.com/openai/v1/chat/completions', [
                     'model' => 'llama-3.1-8b-instant',
                     'messages' => $formattedHistory,
-                    'temperature' => 0.5,
+                    'temperature' => 0.7,
                 ]);
 
             if (!$response->successful()) {
@@ -81,8 +90,13 @@ class ChatbotService {
                 $formattedHistory[] = ['role' => 'assistant', 'content' => $aiReply];
 
                 // Adds the JSON response to the history array so the AI can read it
-                $secondPrompt = "Here is the JSON data from the API endpoint:\n" . $journalJsonData .
-                                "\n\nPlease provide your final answer to the user now.";
+                $secondPrompt = "Here is the JSON data from the API endpoint:\n" .
+                                $journalJsonData .
+                                "\n\nUsing ONLY this data, provide a plain text response.\n" .
+                                "Do NOT use markdown.\n" .
+                                "Do NOT use bullet points.\n" .
+                                "Do NOT use asterisks.\n" .
+                                "Use complete sentences only.";
                 $formattedHistory[] = ['role' => 'user', 'content' => $secondPrompt];
 
                 // Makes a second call to the Groq API with the updated conversation history
