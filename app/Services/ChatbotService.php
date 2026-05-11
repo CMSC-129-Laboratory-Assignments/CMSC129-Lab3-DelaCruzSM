@@ -80,6 +80,7 @@ class ChatbotService {
              * the "[CALL_API...]" text to the human user.
              */
             // Checks if the AI reply contains the special API call phrase
+            // If it does, we know the AI is asking for the user's journal entries data
             if (str_contains($aiReply, '[CALL_API: /api/users/journals]')) {
 
                 // Fetches the actual database data using Eloquent
@@ -87,6 +88,8 @@ class ChatbotService {
                 $journalJsonData = $entries->toJson();
 
                 // Adds the AI API request to the conversation history array
+                // to record that the AI asked for the data and
+                // to provide context for the next API call
                 $formattedHistory[] = ['role' => 'assistant', 'content' => $aiReply];
 
                 // Adds the JSON response to the history array so the AI can read it
@@ -106,7 +109,7 @@ class ChatbotService {
                     ->post('https://api.groq.com/openai/v1/chat/completions', [
                         'model' => 'llama-3.1-8b-instant',
                         'messages' => $formattedHistory,
-                        'temperature' => 0.7,
+                        'temperature' => 0.5,
                     ]);
 
                 // Overwrites the reply with the final, data-aware answer
