@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Main function to send a message to the server and handle the response
     function sendMessage() {
         const message = chatInput.value.trim();
-        if (!message || isWaitingForAi) return;
+        if (!message || isWaitingForAi) return; 
 
         const userHtml = `
             <div class="ai-msg-bubble ai-msg-user">
