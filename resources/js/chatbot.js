@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': csrfToken // Uses the variable we grabbed above
+                'X-CSRF-TOKEN': csrfToken // Include the CSRF token in the request headers for Laravel to validate
             },
             body: JSON.stringify({
                 message: message,

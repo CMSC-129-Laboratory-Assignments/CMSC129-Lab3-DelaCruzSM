@@ -3,23 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chat;
-use App\Services\GeminiService;
+use App\Services\ChatbotService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ChatBotController extends Controller
 {
-    protected $geminiService;
+    protected $chatbotService;
 
-    // Inject the service we just made
-    public function __construct(GeminiService $geminiService) {
-        $this->geminiService = $geminiService;
+    // Injects the ChatbotService into the controller
+    public function __construct(ChatbotService $chatbotService) {
+        $this->chatbotService = $chatbotService;
     }
-    // This method will handle incoming chat message from the frontend widget
+    // Handles incoming chat message from the floating widget and returns the AI response
     public function chat(Request $request) {
+        // Validates the incoming request to ensure it has the required fields
+        // Fields: message (string), chat_id (optional, for existing chats)
         $request->validate([
             'message' => 'required|string',
-            'chat_id' => 'nullable|exists:chats,id' // It might be a brand new chat
+            'chat_id' => 'nullable|exists:chats,id' // chat_id is optional for the first message, but if provided it must exist in the chats table
         ]);
 
         $chatId = $request->chat_id;
@@ -41,8 +43,8 @@ class ChatBotController extends Controller
             $chatId = $chat->id;
         }
 
-        // Calls the service to get the AI's response
-        $reply = $this->geminiService->generateResponse($userId, $chatId, $request->message);
+        // Calls the chatbot service to get the AI response
+        $reply = $this->chatbotService->generateResponse($userId, $chatId, $request->message);
 
         // Returns the data back to the floating widget
         return response()->json([

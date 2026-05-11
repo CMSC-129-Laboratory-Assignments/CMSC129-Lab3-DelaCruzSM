@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/journals/create', [JournalController::class, 'create'])->name('journals/create');
     Route::post('/journals', [JournalController::class, 'store'])->name('journals/store');
 
-    // AI Chatbot Route
+    // ===== AI Chatbot Route =====
     Route::post('/chatbot/send', [App\Http\Controllers\ChatBotController::class, 'chat'])->name('chatbot.send');
 
     // View, Edit & Delete Entries
