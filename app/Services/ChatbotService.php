@@ -60,9 +60,10 @@ class ChatbotService {
         try {
             // First call to the Groq API with the initial conversation history
             $response = Http::withToken(env('GROQ_API_KEY'))
-                ->timeout(15) 
+                ->timeout(15)
                 ->post('https://api.groq.com/openai/v1/chat/completions', [
-                    'model' => 'llama-3.1-8b-instant',
+                    // 'model' => 'llama-3.1-8b-instant',
+                    'model' => 'llama-3.3-70b-versatile',
                     'messages' => $formattedHistory,
                     'temperature' => 0.3,
                 ]);
@@ -107,7 +108,8 @@ class ChatbotService {
                 $response2 = Http::withToken(env('GROQ_API_KEY'))
                     ->timeout(15)
                     ->post('https://api.groq.com/openai/v1/chat/completions', [
-                        'model' => 'llama-3.1-8b-instant',
+                        // 'model' => 'llama-3.1-8b-instant',
+                        'model' => 'llama-3.3-70b-versatile',
                         'messages' => $formattedHistory,
                         'temperature' => 0.5,
                     ]);
