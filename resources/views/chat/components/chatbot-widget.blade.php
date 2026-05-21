@@ -42,7 +42,7 @@
                 </button>
             </div>
             <div style="background: white; text-align: center; padding-bottom: 12px;">
-                <p style="margin: 0; font-size: 10px; color: #94a3b8;">Powered by Gemini AI</p>
+                <p style="margin: 0; font-size: 10px; color: #94a3b8;">Powered by Groq AI</p>
             </div>
         </div>
     </div>
