@@ -17,7 +17,7 @@ This journal application features a fully integrated AI Journal Assistant powere
 
 ### Setup Instructions
 To enable AI chatbot functionality, configure a Groq API Key first.
-1. Visit [Google AI Studio](https://aistudio.google.com/) and sign in with your Google account.
+1. Visit [GroqCloud](https://console.groq.com/home) and sign in with your Google account, GitHub account, or create an account.
 2. Click **Get API Key** and generate a new key. Copy the API key.
 3. Open your `.env` file and paste the API key on your `GROQ_API_KEY=your_generated_api_key_here`.
 
