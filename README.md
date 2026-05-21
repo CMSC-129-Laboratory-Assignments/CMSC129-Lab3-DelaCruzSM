@@ -3,7 +3,7 @@
 The Journal is a digitalized personal journal application built with Laravel and MVC pattern that allows users to write, read, edit, and delete their journal entries.
 
 ## 🤖 AI Chabot Integration (Lab Assignment 3)
-This journal application features a fully integrated AI Journal Assistant powered by Gemini AI designed to help users reflect on their journal entries.
+This journal application features a fully integrated AI Journal Assistant powered by Groq AI designed to help users reflect on their journal entries.
 
 ### AI Features
 * **Floating Chat Widget:** A seamless, non-intrusive UI that floats on the bottom-right of the dashboard page.
@@ -12,15 +12,14 @@ This journal application features a fully integrated AI Journal Assistant powere
 * **Multilingual Support:** The assistant can converse and understand context in English, Tagalog, Hiligaynon, and Taglish.
 
 ### AI Service Used
-* **Provider:** Google Gemini API
-* **Model:** gemini-2.5-flash
-* **Library:** gemini-api-php/laravel
+* **Provider:** Groq API
+* **Model:** llama-3.3-70b-versatile
 
 ### Setup Instructions
-To enable AI chatbot functionality, configure a Gemini API Key first.
+To enable AI chatbot functionality, configure a Groq API Key first.
 1. Visit [Google AI Studio](https://aistudio.google.com/) and sign in with your Google account.
 2. Click **Get API Key** and generate a new key. Copy the API key.
-3. Open your `.env` file and paste the API key on your `GEMINI_API_KEY=your_generated_api_key_here`.
+3. Open your `.env` file and paste the API key on your `GROQ_API_KEY=your_generated_api_key_here`.
 
 ### Example Queries To Try
 * *"What did I write about last March?"*
