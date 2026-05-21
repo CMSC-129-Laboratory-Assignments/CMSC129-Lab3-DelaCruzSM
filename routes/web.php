@@ -52,7 +52,7 @@ Route::middleware('auth')->group(function () {
 // API endpoint the AI will call
 Route::get('/api/users/{id}/journals', function ($id) {
     // Fetch the 20 most recent entries
-    $entries = App\Models\Journal::where('user_id', $id)->latest()->take(20)->get();
+    $entries = App\Models\Journal::where('user_id', $id)->latest()->take(10)->get();
 
     // Returns as pure JSON data
     return response()->json($entries);
